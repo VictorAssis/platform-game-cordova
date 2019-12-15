@@ -8,8 +8,8 @@ import starImg from './assets/star.png'
 const initGame = () => {
   var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 640,
+    height: 360,
     scene: {
       preload: preload,
       create: create,
@@ -47,16 +47,19 @@ const initGame = () => {
   }
 
   function create () {
+    window.addEventListener('resize', resize)
+    resize()
+
     this.add.image(400, 300, 'sky')
     platforms = this.physics.add.staticGroup()
 
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody()
+    platforms.create(320, 353, 'ground').setScale(1.6).refreshBody()
 
-    platforms.create(600, 400, 'ground')
-    platforms.create(50, 250, 'ground')
-    platforms.create(750, 220, 'ground')
+    platforms.create(600, 250, 'ground')
+    platforms.create(50, 150, 'ground')
+    platforms.create(700, 120, 'ground')
 
-    player = this.physics.add.sprite(100, 450, 'dude')
+    player = this.physics.add.sprite(50, 250, 'dude')
 
     player.setBounce(0.2)
     player.setCollideWorldBounds(true)
@@ -88,7 +91,7 @@ const initGame = () => {
     stars = this.physics.add.group({
       key: 'star',
       repeat: 11,
-      setXY: { x: 12, y: 0, stepX: 70 }
+      setXY: { x: 12, y: 0, stepX: 55 }
     })
     stars.children.iterate(function (child) {
       child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
@@ -123,6 +126,22 @@ const initGame = () => {
     }
   }
 
+  function resize () {
+    let canvas = game.canvas
+    let width = window.innerWidth
+    let height = window.innerHeight
+    let wratio = width / height
+    let ratio = canvas.width / canvas.height
+
+    if (wratio < ratio) {
+      canvas.style.width = width + 'px'
+      canvas.style.height = (width / ratio) + 'px'
+    } else {
+      canvas.style.width = (height * ratio) + 'px'
+      canvas.style.height = height + 'px'
+    }
+  }
+
   function collectStar (player, star) {
     star.disableBody(true, true)
     score += 10
@@ -133,7 +152,7 @@ const initGame = () => {
         child.enableBody(true, child.x, 0, true, true)
       })
 
-      var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400)
+      var x = (player.x < 320) ? Phaser.Math.Between(320, 800) : Phaser.Math.Between(0, 320)
 
       var bomb = bombs.create(x, 16, 'bomb')
       bomb.setBounce(1)
