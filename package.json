@@ -5,7 +5,8 @@
   "description": "Test of a platform game running in mobile devices with Cordova and Phaser.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config webpack/prod.js ",
+    "start": "webpack-dev-server --config webpack/base.js --open"
   },
   "keywords": [
     "ecosystem:cordova"
@@ -13,17 +14,31 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "cordova-browser": "^6.0.0"
+    "cordova-android": "^8.1.0",
+    "cordova-browser": "^6.0.0",
+    "phaser": "^3.21.0"
   },
   "devDependencies": {
-    "cordova-plugin-whitelist": "^1.3.4"
+    "cordova-plugin-whitelist": "^1.3.4",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "raw-loader": "^4.0.0",
+    "terser-webpack-plugin": "^2.3.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
   },
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {}
     },
     "platforms": [
-      "browser"
+      "android"
     ]
   }
 }
